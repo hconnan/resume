@@ -1,387 +1,221 @@
-\documentclass[10pt, letterpaper]{article}
+%-------------------------
+% Rover Resume - Star Template
+% Link: https://github.com/subidit/rover-resume
+%
+% CUSTOM COMMANDS \aux{} and \rside{} for part formatting
+% eg. \subsection{Company Name \aux{Designation} \rside{Duration}}
+% Double lined titles with \subsection{} and \subsubsection{}
+% \linkicon gives external link icon
+%-------------------------
 
-% Packages:
-\usepackage[
-    ignoreheadfoot, % set margins without considering header and footer
-    top=2 cm, % seperation between body and page edge from the top
-    bottom=2 cm, % seperation between body and page edge from the bottom
-    left=2 cm, % seperation between body and page edge from the left
-    right=2 cm, % seperation between body and page edge from the right
-    footskip=1.0 cm, % seperation between body and footer
-    % showframe % for debugging 
-]{geometry} % for adjusting page geometry
-\usepackage[explicit]{titlesec} % for customizing section titles
-\usepackage{tabularx} % for making tables with fixed width columns
-\usepackage{array} % tabularx requires this
-\usepackage[dvipsnames]{xcolor} % for coloring text
-\definecolor{primaryColor}{RGB}{31, 69, 41} % define primary color
-\usepackage{enumitem} % for customizing lists
-\usepackage{fontawesome5} % for using icons
-\usepackage{amsmath} % for math
-\usepackage[
-    pdftitle={John Doe's CV},
-    pdfauthor={John Doe},
-    pdfcreator={LaTeX with RenderCV},
-    colorlinks=true,
-    urlcolor=primaryColor
-]{hyperref} % for links, metadata and bookmarks
-\usepackage[pscoord]{eso-pic} % for floating text on the page
-\usepackage{calc} % for calculating lengths
-\usepackage{bookmark} % for bookmarks
-\usepackage{lastpage} % for getting the total number of pages
-\usepackage{changepage} % for one column entries (adjustwidth environment)
-\usepackage{paracol} % for two and three column entries
-\usepackage{ifthen} % for conditional statements
-\usepackage{needspace} % for avoiding page brake right after the section title
-\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
-
-% Ensure that generate pdf is machine readable/ATS parsable:
-\ifPDFTeX
-    \input{glyphtounicode}
-    \pdfgentounicode=1
-    \usepackage[T1]{fontenc}
-    \usepackage[utf8]{inputenc}
-    \usepackage{lmodern}
-\fi
-
-\usepackage[default, type1]{sourcesanspro} 
-
-% Some settings:
-\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
-\pagestyle{empty} % no header or footer
-\setcounter{secnumdepth}{0} % no section numbering
-\setlength{\parindent}{0pt} % no indentation
-\setlength{\topskip}{0pt} % no top skip
-\setlength{\columnsep}{0.15cm} % set column seperation
-\makeatletter
-\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
-\patchcmd{\ps@customFooterStyle}{\thepage}{
-    \color{gray}\textit{\small John Doe - Page \thepage{} of \pageref*{LastPage}}
-}{}{} % replace number by desired string
-\makeatother
-\pagestyle{customFooterStyle}
-
-\titleformat{\section}{
-    % avoid page braking right after the section title
-    \needspace{4\baselineskip}
-    % make the font size of the section title large and color it with the primary color
-    \Large\color{primaryColor}
-}{
-}{
-}{
-    % print bold title, give 0.15 cm space and draw a line of 0.8 pt thickness
-    % from the end of the title to the end of the body
-    \textbf{#1}\hspace{0.15cm}\titlerule[0.8pt]\hspace{-0.1cm}
-}[] % section title formatting
-
-\titlespacing{\section}{
-    % left space:
-    -1pt
-}{
-    % top space:
-    0.3 cm
-}{
-    % bottom space:
-    0.2 cm
-} % section title spacing
-
-% \renewcommand\labelitemi{$\vcenter{\hbox{\small$\bullet$}}$} % custom bullet points
-\newenvironment{highlights}{
-    \begin{itemize}[
-        topsep=0.10 cm,
-        parsep=0.10 cm,
-        partopsep=0pt,
-        itemsep=0pt,
-        leftmargin=0.4 cm + 10pt
-    ]
-}{
-    \end{itemize}
-} % new environment for highlights
-
-\newenvironment{highlightsforbulletentries}{
-    \begin{itemize}[
-        topsep=0.10 cm,
-        parsep=0.10 cm,
-        partopsep=0pt,
-        itemsep=0pt,
-        leftmargin=10pt
-    ]
-}{
-    \end{itemize}
-} % new environment for highlights for bullet entries
+\documentclass[11pt]{article}
 
 
-\newenvironment{onecolentry}{
-    \begin{adjustwidth}{
-        0.2 cm + 0.00001 cm
-    }{
-        0.2 cm + 0.00001 cm
-    }
-}{
-    \end{adjustwidth}
-} % new environment for one column entries
+\usepackage[sfdefault,semibold,lf]{FiraSans}
+\usepackage[a4paper,margin=0.5in]{geometry}
 
-\newenvironment{twocolentry}[2][]{
-    \onecolentry
-    \def\secondColumn{#2}
-    \setcolumnwidth{\fill, 4.5 cm}
-    \begin{paracol}{2}
-}{
-    \switchcolumn \raggedleft \secondColumn
-    \end{paracol}
-    \endonecolentry
-} % new environment for two column entries
+\usepackage{xcolor}
+\definecolor{accent}{HTML}{1F4529}
 
-\newenvironment{threecolentry}[3][]{
-    \onecolentry
-    \def\thirdColumn{#3}
-    \setcolumnwidth{1 cm, \fill, 4.5 cm}
-    \begin{paracol}{3}
-    {\raggedright #2} \switchcolumn
-}{
-    \switchcolumn \raggedleft \thirdColumn
-    \end{paracol}
-    \endonecolentry
-} % new environment for three column entries
+\newcommand{\linkicon}{
+  \color{gray}{\footnotesize\raisebox{1pt}{\faIcon{external-link-alt}}}
+}
 
-\newenvironment{header}{
-    \setlength{\topsep}{0pt}\par\kern\topsep\centering\color{primaryColor}\linespread{1.5}
-}{
-    \par\kern\topsep
-} % new environment for the header
+\setcounter{secnumdepth}{0}
+\pdfgentounicode=1
 
-\newcommand{\placelastupdatedtext}{% \placetextbox{<horizontal pos>}{<vertical pos>}{<stuff>}
-  \AddToShipoutPictureFG*{% Add <stuff> to current page foreground
-    \put(
-        \LenToUnit{\paperwidth-2 cm-0.2 cm+0.05cm},
-        \LenToUnit{\paperheight-1.0 cm}
-    ){\vtop{{\null}\makebox[0pt][c]{
-        \small\color{gray}\textit{Last updated in September 2024}\hspace{\widthof{Last updated in September 2024}}
-    }}}%
-  }%
-}%
 
-% save the original href command in a new command:
-\let\hrefWithoutArrow\href
+%====== LIST FORMATTING ======
+\usepackage{enumitem}
+\setlist[itemize]{topsep=0pt, nosep, left=0pt .. 1.5em}
+\setlist[enumerate]{left=0pt..1.5em}
+\setlist[description]{nosep,left=0pt .. 1.5em}
 
-% new command for external links:
-\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+\usepackage{ragged2e}
 
+
+%====== TITLE FORMATTING ======
+\usepackage{xhfill}
+\usepackage{soul}
+\newcommand{\midrule}[1]{
+  \leavevmode
+  \xrfill[.5ex]{1pt}[accent]~\so{#1}~\xrfill[.5ex]{1pt}[accent]
+}
+
+\usepackage{titlesec}
+\titlespacing{\section}{0pt}{*4}{*1}
+\titlespacing{\subsection}{0pt}{*3}{*0}
+\titlespacing{\subsubsection}{0pt}{*0}{*0}
+\titleformat{\section}{\large\bfseries\uppercase}{}{}{\midrule}
+\titleformat*{\subsection}{\large\bfseries\scshape}
+\titleformat*{\subsubsection}{\bfseries\scshape}
+
+
+%====== CUSTOM COMMANDS ======
+\newcommand{\aux}[1]{
+  $|$ \space {\normalfont\itshape #1}%
+}
+
+\newcommand{\rside}[1]{
+  \hfill {\normalfont\color{accent} #1}%
+}
+
+
+%====== FOOTER ======
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+% Replace 'Star Rover' with your name in next line
+\fancyfoot[C]{\small\color{gray} Hugues Connan -- Page \thepage\ of \pageref*{LastPage}}
+
+% \pagestyle{empty} 
+% uncomment previous line to hide page numbering
+
+
+%====== PACKAGES ======
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\usepackage[bookmarks=false,hidelinks]{hyperref}
+
+
+%====== FINISH PREAMBLE ======
+
+%====== DOCUMENT STARTS HERE ======
 
 \begin{document}
-    \newcommand{\AND}{\unskip
-        \cleaders\copy\ANDbox\hskip\wd\ANDbox
-        \ignorespaces
-    }
-    \newsavebox\ANDbox
-    \sbox\ANDbox{}
 
-    \begin{header}
-        \fontsize{30 pt}{30 pt}
-        \textbf{Hugues Connan}
+%====== BANNER ======
+
+\begin{center}
+  {
+    \fontsize{36}{12} 
+    \fontseries{heavy}\selectfont
+    \color{accent} 
+    HUGUES CONNAN % YOUR NAME HERE
+  } \\ \medskip
+
+  % {\color{gray}{\faHome}} 1 infinite loop, CA \quad
+
+  \href{tel:+33667019219}{{\color{gray}{\faPhone}} +33 6 67 01 92 19} \quad
+  \href{mailto:hugues.connan@gmail.com}{{\color{gray}{\faEnvelope}} hugues.connan@gmail.com} \quad 
+  \href{https://github.com/hconnan}{{\color{gray}{\faGithub}} /hconnan} \quad
+  \href{https://www.linkedin.com/in/hugues-connan}{{\color{gray}{\faLinkedin}} /hugues-connan} \quad
+  %\href{https://github.com/}{{\color{gray}{\faLink}} starportfolio.com} 
+\end{center}
+
+%====== BANNER END ======
+
+\section{Work Experience}
+%==========
+\subsection{Cloud DevOps Engineer \& Trainer \rside{Since March 2022}}
+\subsubsection{Zenika \rside{Rennes, France}}
+
+\begin{justify}
+  As Zenika is digital services company, I am working for major accounts as a Cloud and DevOps Engineer.
+  In parallel, I have been training more than 100 people on \textbf{Kubernetes}. My main responsibilities includes:
+\end{justify}
+\vspace{-3mm}
+
+\begin{itemize}
+  \item Helping companies in their \textbf{move to cloud} journey, mainly to \textbf{Google Cloud} and \textbf{Amazon}.
+  \item Building all the infrastructure using \textbf{Terraform} and \textbf{Ansible}
+  \item Automating applications deployments thanks to \textbf{Helm} and \textbf{GitLab CI}
+  \item Managing many \textbf{production-ready} \textbf{Kubernetes} cluster, ensuring \textbf{high-availability}
+  \item Leading a global effort to monitor platforms using \textbf{Prometheus}, \textbf{VictoriaMetrics} and \textbf{Grafana}
+  \item Leading a significant effort on \textbf{FinOps} side to maximize the business value of cloud using \textbf{autoscaling} or storage lifecyle 
+\end{itemize}
+
+\subsection{Cloud DevOps Engineer: on-premise solution architecture \rside{Sept 2019 -- Feb 2022}}
+\subsubsection{Thales \rside{Rennes, France}}
+
+\begin{justify}
+  I contributed to 2 significant inner-source projects built an online and offline Platform-as-a-Service atop Kubernetes and OpenShift, production-ready, latency-critical and high-availabile.
+\end{justify}
+\vspace{-2mm}
+
+\begin{itemize}
+  \item Helping to define and implement the \textbf{High-Level Design and architecture}
+  \item Leading a global effort to secure Kubernetes internal flows using the \textbf{Network Policies} and OPA Gatekeeper
+  \item Automating the deployment and bootstrap applications such as Elastic stack, Vault, Keycloak, PostgreSQL using \textbf{Ansible}, \textbf{Helm} and \textbf{Kubernetes Operator}
+\end{itemize}
+
+% \subsection{Back-End Developer Trainee \rside{March 2019 -- Aug 2019}}
+% \subsubsection{Worldline \rside{Rennes, France}}
+% \begin{justify}
+% A challenging growth experience, working for the Security Operations Center where I
+% programmed a Java app collecting the service's Key Performance Indicators into Elasticsearch.
+% \end{justify}
+
+\section{Education}
+%==========
+\subsection{Ecole Supérieur d'Ingénieurs de Rennes \aux{Master of Engineering} \rside{2014 -- 2019}}
+\subsubsection{Rennes University \rside{Rennes, France}}
+\begin{itemize}
+  \item "Grande Ecole" academic excellence program
+  \item Graduated with a Master's degree in \textbf{Information Systems Engineering}
+\end{itemize}
+
+\subsection{Computer Science \aux{Bachelor of Sciences} \rside{2018}}
+\subsubsection{Newcastle University \rside{Newcastle Upon Tyne, United Kingdom}}
+\begin{itemize}
+  \item Sucessfully followed the Computer Science BSc, stage 3 for one semester as \textbf{Erasmus student}.
+\end{itemize}
+
+\section{Skills}
+%===============
+\begin{description}
+  \item[Cloud \& on-premise architecture] Google Cloud, Amazon Web Services, Kubernetes
+  \item[DevOps] Terraform, Ansible, GitLab CI, Kubernetes, Docker, Helm / Helmfile, Kustomize
+  \item[System] Ubuntu, Rocky 
+  \item[Language] French native language, English full proficiency
+\end{description}
+
+
+\section{Certifications}
+%=======================
+\begin{enumerate}[label=\null, left=0pt..0pt, itemsep=0pt]
+  \item \href{https://www.credly.com/badges/871d71ae-5ad4-4610-a92c-c93145b30d53/public_url}{Kubernetes and Cloud Native Security Associate} . \rside{2024}
+  \item \href{https://www.credly.com/badges/0560ea75-b3e7-4bc1-b077-66abd00622b5/public_url}{Kubernetes and Cloud Native Associate.} \rside{2024}
+  \item \href{https://www.credly.com/badges/2ff816db-c2e5-4c2c-b87b-2eaaca2e089e/public_url}{Certified Kubernetes Security Specialist.} \rside{2024}
+  \item \href{https://www.credly.com/badges/6d2e8ee2-57a0-45eb-99a8-b7875562dc25/public_url}{Certified Kubernetes Application Developer.} \rside{2023}
+  \item \href{https://www.credly.com/badges/c0ff3fcc-9513-4fab-ac8a-95061a53f343/public_url}{Certified Kubernetes Administrator.} \rside{2022}
+\end{enumerate}
+
+
+% \section{Publications}
+% %=====================
+% \begin{enumerate}
+%   \item A. Vaswani et al., “Attention is All you Need,” arXiv (Cornell University), vol. 30, pp. 5998 – 6008, Jun. 2017, [Online]. Available: \url{https://arxiv.org/pdf/1706.03762v5}
+%   \item C. Darwin and J. Murray, \textit{On the origin of species by means of natural selection, or, The preservation of favoured races in the struggle for life.} 1859. doi: 10.5962/bhl.title.82303.
+% \end{enumerate}
+
+
+% \section{Awards}
+% %===============
+% \begin{description}
+%   \item [2023] Some programming bootcamp, Location.
+%   \item [2022] Forbes Top 15 Procrastinators under 15.
+%   \item [2021] Conducted workshop on family planning by abstainance in SomePlace.
+% \end{description}
+
+
+% \section{Projects}
+% %=================
+% \subsection{Lunar Rover Project \aux{\href{https://robotics.nasa.gov/lmr/}{Link \linkicon}} \rside{2012 -- 13}}
+% \begin{itemize}
+%   \item LIDAR array, GPS, Variable FOV camera, Python, C/C++
+%   \item Designed the rover to be modular, reconfigurable for sensor systems, handle science payloads, storage space, surplus resources, and robotics addons. % These modules shall be supported by centralized power and data ports. 
+% \end{itemize}
+
+% \subsection{Mars Rover \aux{\href{https://science.nasa.gov/mission/mars-exploration-rovers-spirit-and-opportunity/}{Project link \linkicon}} \rside{Feb 2012}}
+% \begin{itemize}
+%   \item Tech used, Language, Frameworks etc.
+%   \item Implemented ABC feature
+%   \item Optimised XYZ by 50\%
+% \end{itemize}
 
-        \vspace{0.3 cm}
-
-        \normalsize
-        \mbox{{\footnotesize\faMapMarker*}\hspace*{0.13cm}Rennes, France}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{mailto:hugues.connan@gmail.com}{{\footnotesize\faEnvelope[regular]}\hspace*{0.13cm}hugues.connan@gmail.com}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{tel:+33 6 67 01 92 19}{{\footnotesize\faPhone*}\hspace*{0.13cm}+33 6 67 01 92 19}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://yourwebsite.com/}{{\footnotesize\faLink}\hspace*{0.13cm}yourwebsite.com}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://linkedin.com/in/hugues-connan}{{\footnotesize\faLinkedinIn}\hspace*{0.13cm}/hugues-connan}}%
-        \kern 0.25 cm%
-        \AND%
-        \kern 0.25 cm%
-        \mbox{\hrefWithoutArrow{https://github.com/}{{\footnotesize\faGithub}\hspace*{0.13cm}yourusername}}%
-    \end{header}
-
-    \vspace{0.3 cm - 0.3 cm}
-
-
-    \section{Welcome to RenderCV!}
-
-
-
-        
-        \begin{onecolentry}
-            \href{https://rendercv.com}{RenderCV} is a LaTeX-based CV/resume version-control and maintenance app. It allows you to create a high-quality CV or resume as a PDF file from a YAML file, with \textbf{Markdown syntax support} and \textbf{complete control over the LaTeX code}.
-        \end{onecolentry}
-
-        \vspace{0.2 cm}
-
-        \begin{onecolentry}
-            The boilerplate content was inspired by \href{https://github.com/dnl-blkv/mcdowell-cv}{Gayle McDowell}.
-        \end{onecolentry}
-
-
-    
-    \section{Quick Guide}
-
-    \begin{onecolentry}
-        \begin{highlightsforbulletentries}
-
-
-        \item Each section title is arbitrary and each section contains a list of entries.
-
-        \item There are 7 unique entry types: \textit{BulletEntry}, \textit{TextEntry}, \textit{EducationEntry}, \textit{ExperienceEntry}, \textit{NormalEntry}, \textit{PublicationEntry}, and \textit{OneLineEntry}.
-
-        \item Select a section title, pick an entry type, and start writing your section!
-
-        \item \href{https://docs.rendercv.com/user_guide/}{Here}, you can find a comprehensive user guide for RenderCV.
-
-
-        \end{highlightsforbulletentries}
-    \end{onecolentry}
-
-    \section{Education}
-
-
-
-        
-        \begin{threecolentry}{\textbf{BS}}{
-            Sept 2000 – May 2005
-        }
-            \textbf{University of Pennsylvania}, Computer Science
-            \begin{highlights}
-                \item GPA: 3.9/4.0 (\href{https://example.com}{a link to somewhere})
-                \item \textbf{Coursework:} Computer Architecture, Comparison of Learning Algorithms, Computational Theory
-            \end{highlights}
-        \end{threecolentry}
-
-
-    
-    \section{Experience}
-
-
-
-        
-        \begin{twocolentry}{
-            Cupertino, CA
-
-        June 2005 – Aug 2007
-        }
-            \textbf{Apple}, Software Engineer
-            \begin{highlights}
-                \item Reduced time to render user buddy lists by 75\% by implementing a prediction algorithm
-                \item Integrated iChat with Spotlight Search by creating a tool to extract metadata from saved chat transcripts and provide metadata to a system-wide search database
-                \item Redesigned chat file format and implemented backward compatibility for search
-            \end{highlights}
-        \end{twocolentry}
-
-
-        \vspace{0.2 cm}
-
-        \begin{twocolentry}{
-            Redmond, WA
-
-        June 2003 – Aug 2003
-        }
-            \textbf{Microsoft}, Software Engineer Intern
-            \begin{highlights}
-                \item Designed a UI for the VS open file switcher (Ctrl-Tab) and extended it to tool windows
-                \item Created a service to provide gradient across VS and VS add-ins, optimizing its performance via caching
-                \item Built an app to compute the similarity of all methods in a codebase, reducing the time from $\mathcal{O}(n^2)$ to $\mathcal{O}(n \log n)$
-                \item Created a test case generation tool that creates random XML docs from XML Schema
-                \item Automated the extraction and processing of large datasets from legacy systems using SQL and Perl scripts
-            \end{highlights}
-        \end{twocolentry}
-
-
-
-    
-    \section{Publications}
-
-
-
-        
-        \begin{samepage}
-            \begin{twocolentry}{
-                Jan 2004
-            }
-                \textbf{3D Finite Element Analysis of No-Insulation Coils}
-
-                \vspace{0.10 cm}
-
-                \mbox{Frodo Baggins}, \mbox{\textbf{\textit{John Doe}}}, \mbox{Samwise Gamgee}
-                \vspace{0.10 cm}
-
-        \href{https://doi.org/10.1109/TASC.2023.3340648}{10.1109/TASC.2023.3340648}
-            \end{twocolentry}
-        \end{samepage}
-
-
-    
-    \section{Projects}
-
-
-
-        
-        \begin{twocolentry}{
-            \href{https://github.com/sinaatalay/rendercv}{github.com/name/repo}
-        }
-            \textbf{Multi-User Drawing Tool}
-            \begin{highlights}
-                \item Developed an electronic classroom where multiple users can simultaneously view and draw on a "chalkboard" with each person's edits synchronized
-                \item Tools Used: C++, MFC
-            \end{highlights}
-        \end{twocolentry}
-
-
-        \vspace{0.2 cm}
-
-        \begin{twocolentry}{
-            \href{https://github.com/sinaatalay/rendercv}{github.com/name/repo}
-        }
-            \textbf{Synchronized Desktop Calendar}
-            \begin{highlights}
-                \item Developed a desktop calendar with globally shared and synchronized calendars, allowing users to schedule meetings with other users
-                \item Tools Used: C\#, .NET, SQL, XML
-            \end{highlights}
-        \end{twocolentry}
-
-
-        \vspace{0.2 cm}
-
-        \begin{twocolentry}{
-            2002
-        }
-            \textbf{Custom Operating System}
-            \begin{highlights}
-                \item Built a UNIX-style OS with a scheduler, file system, text editor, and calculator
-                \item Tools Used: C
-            \end{highlights}
-        \end{twocolentry}
-
-
-
-    
-    \section{Technologies}
-
-
-
-        
-        \begin{onecolentry}
-            \textbf{Languages:} C++, C, Java, Objective-C, C\#, SQL, JavaScript
-        \end{onecolentry}
-
-        \vspace{0.2 cm}
-
-        \begin{onecolentry}
-            \textbf{Technologies:} .NET, Microsoft SQL Server, XCode, Interface Builder
-        \end{onecolentry}
-
-
-    
 
 \end{document}
