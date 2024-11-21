@@ -39,7 +39,7 @@
 \usepackage{soul}
 \newcommand{\midrule}[1]{
   \leavevmode
-  \xrfill[.5ex]{1pt}[accent]~\so{#1}~\xrfill[.5ex]{1pt}[accent]
+  \xrfill[.5ex]{1pt}[accent]~\so{ #1}~\xrfill[.5ex]{1pt}[accent]
 }
 
 \usepackage{titlesec}
@@ -47,8 +47,8 @@
 \titlespacing{\subsection}{0pt}{*3}{*0}
 \titlespacing{\subsubsection}{0pt}{*0}{*0}
 \titleformat{\section}{\large\bfseries\uppercase}{}{}{\midrule}
-\titleformat*{\subsection}{\large\bfseries\scshape}
-\titleformat*{\subsubsection}{\bfseries\scshape}
+\titleformat*{\subsection}{\large\bfseries\scshape\color{accent}}
+\titleformat*{\subsubsection}{\bfseries\scshape\color{accent}}
 
 
 %====== CUSTOM COMMANDS ======
@@ -57,7 +57,7 @@
 }
 
 \newcommand{\rside}[1]{
-  \hfill {\normalfont\color{accent} #1}%
+  \hfill {\normalfont\color{gray} #1}%
 }
 
 
@@ -99,10 +99,10 @@
 
   % {\color{gray}{\faHome}} 1 infinite loop, CA \quad
 
-  \href{tel:+33667019219}{{\color{gray}{\faPhone}} +33 6 67 01 92 19} \quad
-  \href{mailto:hugues.connan@gmail.com}{{\color{gray}{\faEnvelope}} hugues.connan@gmail.com} \quad 
-  \href{https://github.com/hconnan}{{\color{gray}{\faGithub}} /hconnan} \quad
-  \href{https://www.linkedin.com/in/hugues-connan}{{\color{gray}{\faLinkedin}} /hugues-connan} \quad
+  \href{tel:+33667019219}{{\color{accent}{\faPhone}} +33 6 67 01 92 19} \quad
+  \href{mailto:hugues.connan@gmail.com}{{\color{accent}{\faEnvelope}} hugues.connan@gmail.com} \quad 
+  \href{https://github.com/hconnan}{{\color{accent}{\faGithub}} /hconnan} \quad
+  \href{https://www.linkedin.com/in/hugues-connan}{{\color{accent}{\faLinkedin}} /hugues-connan} \quad
   %\href{https://github.com/}{{\color{gray}{\faLink}} starportfolio.com} 
 \end{center}
 
@@ -128,7 +128,7 @@
   \item Leading a significant effort on \textbf{FinOps} side to maximize the business value of cloud using \textbf{autoscaling} or storage lifecyle 
 \end{itemize}
 
-\subsection{Cloud DevOps Engineer: on-premise solution architecture \rside{Sept 2019 -- Feb 2022}}
+\subsection{Cloud DevOps Engineer \rside{Sept 2019 -- Feb 2022}}
 \subsubsection{Thales \rside{Rennes, France}}
 
 \begin{justify}
